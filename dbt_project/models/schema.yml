@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: spy_transformed
+    columns:
+      - name: symbol
+        tests:
+          - not_null
+      - name: date
+        tests:
+          - unique
+          - not_null
+      - name: close
+        tests:
+          - not_null
+      - name: daily_return_pct
+        tests:
+          - not_null
+      - name: 7d_ma
+        quote: true
+        tests:
+          - not_null
+      - name: 30d_ma
+        quote: true
+        tests:
+          - not_null
+      - name: 90d_ma
+        quote: true
+        tests:
+          - not_null
+      - name: 30d_volatility
+        quote: true
+        tests:
+          - not_null
+      - name: month_to_date_return
+        tests:
+          - not_null
+      - name: yearly_change_pct
+        tests:
+          - not_null
+      - name: high_30d_flag
+        tests:
+          - accepted_values:
+              values: ['true', 'false']
+      - name: drawdown_pct
+        tests:
+          - not_null
+      - name: volatility_flag
+        tests:
+          - accepted_values:
+              values: ['true', 'false']

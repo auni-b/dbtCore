@@ -4,10 +4,9 @@
 
 This project involved implementing a local pipeline for 20 years of SPY index data, ingesting, modeling, and validating the time-series data in a local environment using dbt Core and DuckDB.
 
-The index data is ingested via a python script, which can be found in 'get_spy_data.py'. Afterwards, the resulting csv in 'dbt_project/seeds' can be seeded using 'dbt seed', and subsequent runs of the models with 'dbt run', the tests with 'dbt test', and debugging with 'dbt debug', all yield
-the expected results.
+The index data is ingested via a python script, which can be found in `get_spy_data.py`. Afterwards, the resulting csv in `dbt_project/seeds` can be seeded using `dbt seed`, and subsequent runs of the models with `dbt run`, the tests with `dbt test`, and debugging with `dbt debug`, all yield the expected results. The models and tests are located in `dbt_project/models`.
 
-CSVs of the results of these runs are included at the top folder here as 'staged_spy_data.csv', 'transformed_spy_data', and 'validation_metrics'. The second of these shows the transformed dataset ready for downstream use, while the last contains the topline validation metrics.
+CSVs of the results of these runs are included at the top folder here as `staged_spy_data.csv`, `transformed_spy_data.csv`, and `validation_metrics.csv`. The second of these shows the transformed dataset ready for downstream use, while the last contains the topline validation metrics.
 
 ## Experience and Comparison
 
@@ -15,7 +14,7 @@ CSVs of the results of these runs are included at the top folder here as 'staged
 
 The learning curve for using dbt Core felt tough initially. Admittedly, that had much to do with this being the first time I was properly working with a data transformation framework - I've preprocessed datasets and directly interfaced with them via python/SQL files previously instead of actually pipelining them as was the case here.
 
-I ran into some difficulties trying to get dbt Core and DuckDB installed on my system. To begin, I tried using a virtual environment as was recommended in the dbt docs, but that kept causing dependency issues when trying to 'pip install dbt-core dbt-duckdb', and even a clean conda install didn't work the first time, rather surprisingly. Creating a new conda environment with a different, specific version of Python (3.11.8) that I saw had worked for someone on a dbt forum finally resolved the installation snags.
+I ran into some difficulties trying to get dbt Core and DuckDB installed on my system. To begin, I tried using a virtual environment as was recommended in the dbt docs, but that kept causing dependency issues when trying to `pip install dbt-core dbt-duckdb`, and even a clean conda install didn't work the first time, rather surprisingly. Creating a new conda environment with a different, specific version of Python (3.11.8) that I saw had worked for someone on a dbt forum finally resolved the installation snags.
 
 Once I finally got to the real core of the task, after first confirming the connection to DuckDB in a small test python script, and then eventually realizing that I could not run duckdb commands directly in the command line, but instead would need to use the interactive shell, which was not directly mentioned anywhere in the dbt docs, but only in a section of the dbt-duckdb GitHub page, I got underway with staging the data and building the models. Here at least the available docs seemed to cover the key things to know, and learning about Jinja templating and capabilities was neat - I looked to apply what I could.
 
@@ -34,4 +33,4 @@ Comparatively, SQLMesh is a newer player on the scene, but they're open-source, 
 
 SQLMesh's setup process seems to be on par with dbt, but the entire development loop is more chiseled, not needing a full refresh (though some of this can be mitigated on the dbt side by using an extension like Power User for dbt, which I did throughout the project). Testing capabilities are on par, and validation is slightly stronger due to the aforementioned native SQL understanding, along with data contracts to more clearly identify migration pain points before deploying to production.
 
-CLI workflows are similar, and the developer experience, while not backed with as massive of a community, is still robust. The ecosystem maturity is coming along, and at least using DuckDB as a point of reference, the documentation for dbt and SQLMesh are comparable. The infrastructure cost could be lower with SQLMesh, but team ramp-up could be more involved. It would also be suitable long-term for modern data platforms, since it is being maintained by Tobiko Data, which has a paid, Cloud offering separately as well, that should help maintain the open source offering.
+CLI workflows are similar, and the developer experience, while not backed with as massive of a community, is still robust. The ecosystem maturity is coming along, and at least using DuckDB as a point of reference, the documentation for integration found in the docs for dbt and SQLMesh are comparable. The infrastructure cost could be lower with SQLMesh, but team ramp-up could be more involved. It would also be suitable long-term for modern data platforms, since it is being maintained by Tobiko Data, which has a paid, Cloud offering separately as well, that should indirectly help with the upkeep of the open source offering.
